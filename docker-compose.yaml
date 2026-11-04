@@ -1,0 +1,26 @@
+services:
+  app:
+    build: .
+    container_name: dreamcatcher-app
+    expose:
+      - "3001"
+    volumes:
+      - dream_data:/app/data
+    networks:
+      - dream_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: dreamcatcher-proxy
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+    networks:
+      - dream_network
+
+volumes:
+  dream_data:
+
+networks:
+  dream_network:
